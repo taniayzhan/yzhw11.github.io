@@ -1,0 +1,10 @@
+---
+title: "Simple Website"
+author: "YZ"
+date: "11/10/2019"
+output: html_document
+---
+
+# Yang Zhang's Simple Website
+## The content is for DS6307 Homework
+### Hope you find it interesting!
