@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Michael (Branum) Stephan and Yang Zhang" />
+
+<meta name="date" content="2019-10-19" />
+
+<title>Doing Data Science - Midterm Project</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.9.0/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="site_libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-1.46.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="site_libs/plotly-main-1.46.1/plotly-latest.min.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">My Website</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">About Me</a>
+</li>
+<li>
+  <a href="eda.html">EDA</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Doing Data Science - Midterm Project</h1>
+<h4 class="author">Michael (Branum) Stephan and Yang Zhang</h4>
+<h4 class="date">10/19/2019</h4>
+
+</div>
+
+
+<pre class="r"><code>library(dplyr)
+library(here)
+library(ggplot2)
+library(tidyr)
+library(ggthemes)
+library(doBy)
+library(reshape)
+library(plotly)
+library(GGally)
+library(caret)
+library(e1071)
+library(class)
+library(usmap)
+library(magrittr)</code></pre>
+
+<p>First, we create some custom theme to ensure homogoneity throughout the presentation deck.</p>
+<pre class="r"><code># set global theme
+# custom theme
+bg_color = &quot;#0B0C10&quot;
+bar_color = &quot;#66FCF1&quot;
+text_main = &quot;#FFFFF&quot;
+text_ticks = &quot;#CFC6C7&quot;
+axis_lines = #453a3b&quot;
+cust_theme &lt;- theme(plot.title = element_text(color = &#39;white&#39;, vjust=0.5, hjust=0.5),
+                    plot.background = element_rect(fill = bg_color),
+                    panel.background = element_rect(fill = bg_color),
+                    axis.text.x=element_text(angle=90,hjust=1),
+                    axis.text = element_text(colour = text_ticks),
+                    panel.grid.major.x = element_blank(),
+                    panel.grid.minor.x = element_blank(),
+                    panel.grid.major.y =  element_line(colour = &quot;#453a3b&quot;, linetype = 1, size = 0.25),
+                    panel.grid.minor.y = element_blank(),
+                    axis.title = element_text(colour = &quot;white&quot;))
+
+# overwrite default theme with custom
+theme_set(theme_foundation() + cust_theme)</code></pre>
+
+<p>Then, we created a relative file path from the “here” library for better reproducibility. After setting our working directory, we imported the files into dataframes for better transformation capabilities.</p>
+<pre class="r"><code># set relative brewery file path as variable
+beers_csv &lt;- here(&quot;project_files&quot;, &quot;Beers.csv&quot;)
+breweries_csv &lt;- here(&quot;project_files&quot;, &quot;Breweries.csv&quot;)
+
+# initialize dataframes
+beers &lt;- data.frame(read.csv(beers_csv))
+breweries &lt;- data.frame(read.csv(breweries_csv))</code></pre>
+
+<div id="part-1-counting-breweries-by-state." class="section level1">
+<h1>Part 1: Counting breweries by state.</h1>
+<p>How many breweries are present in each state? In order to investigate the number of breweries in our data set, we group everything by state and then perform a tally function in order to count total breweries. Then we plot the results as a bar chart using ggplot (and plotly).</p>
+<pre class="r"><code># Question 1 - How many breweries are present in each state?
+per_state &lt;- breweries %&gt;% group_by(State) %&gt;% tally(name=&quot;breweries_per_state&quot;) %&gt;% arrange(desc(breweries_per_state))
+fig1 &lt;- per_state %&gt;% ggplot(aes(x=reorder(State, breweries_per_state), y=breweries_per_state)) + geom_bar(stat=&quot;identity&quot;, fill=bar_color) + ggtitle(&quot;Total Breweries per State&quot;) + ylab(&quot;Total Breweries&quot;) + xlab(&quot;State&quot;)
+
+ggplotly(fig1)</code></pre>
+<p><div id="htmlwidget-144279caf2e2c509cb3a" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-144279caf2e2c509cb3a">{"x":{"data":[{"orientation":"v","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.900000000000002,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006],"base":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"x":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51],"y":[1,1,1,1,2,2,2,2,3,3,3,3,3,4,4,4,4,4,4,5,5,5,5,5,6,7,7,7,8,9,9,9,10,11,12,15,15,16,16,18,19,20,22,23,23,25,28,29,32,39,47],"text":["reorder(State, breweries_per_state):  DC<br />breweries_per_state:  1","reorder(State, breweries_per_state):  ND<br />breweries_per_state:  1","reorder(State, breweries_per_state):  SD<br />breweries_per_state:  1","reorder(State, breweries_per_state):  WV<br />breweries_per_state:  1","reorder(State, breweries_per_state):  AR<br />breweries_per_state:  2","reorder(State, breweries_per_state):  DE<br />breweries_per_state:  2","reorder(State, breweries_per_state):  MS<br />breweries_per_state:  2","reorder(State, breweries_per_state):  NV<br />breweries_per_state:  2","reorder(State, breweries_per_state):  AL<br />breweries_per_state:  3","reorder(State, breweries_per_state):  KS<br />breweries_per_state:  3","reorder(State, breweries_per_state):  NH<br />breweries_per_state:  3","reorder(State, breweries_per_state):  NJ<br />breweries_per_state:  3","reorder(State, breweries_per_state):  TN<br />breweries_per_state:  3","reorder(State, breweries_per_state):  HI<br />breweries_per_state:  4","reorder(State, breweries_per_state):  KY<br />breweries_per_state:  4","reorder(State, breweries_per_state):  NM<br />breweries_per_state:  4","reorder(State, breweries_per_state):  SC<br />breweries_per_state:  4","reorder(State, breweries_per_state):  UT<br />breweries_per_state:  4","reorder(State, breweries_per_state):  WY<br />breweries_per_state:  4","reorder(State, breweries_per_state):  IA<br />breweries_per_state:  5","reorder(State, breweries_per_state):  ID<br />breweries_per_state:  5","reorder(State, breweries_per_state):  LA<br />breweries_per_state:  5","reorder(State, breweries_per_state):  NE<br />breweries_per_state:  5","reorder(State, breweries_per_state):  RI<br />breweries_per_state:  5","reorder(State, breweries_per_state):  OK<br />breweries_per_state:  6","reorder(State, breweries_per_state):  AK<br />breweries_per_state:  7","reorder(State, breweries_per_state):  GA<br />breweries_per_state:  7","reorder(State, breweries_per_state):  MD<br />breweries_per_state:  7","reorder(State, breweries_per_state):  CT<br />breweries_per_state:  8","reorder(State, breweries_per_state):  ME<br />breweries_per_state:  9","reorder(State, breweries_per_state):  MO<br />breweries_per_state:  9","reorder(State, breweries_per_state):  MT<br />breweries_per_state:  9","reorder(State, breweries_per_state):  VT<br />breweries_per_state: 10","reorder(State, breweries_per_state):  AZ<br />breweries_per_state: 11","reorder(State, breweries_per_state):  MN<br />breweries_per_state: 12","reorder(State, breweries_per_state):  FL<br />breweries_per_state: 15","reorder(State, breweries_per_state):  OH<br />breweries_per_state: 15","reorder(State, breweries_per_state):  NY<br />breweries_per_state: 16","reorder(State, breweries_per_state):  VA<br />breweries_per_state: 16","reorder(State, breweries_per_state):  IL<br />breweries_per_state: 18","reorder(State, breweries_per_state):  NC<br />breweries_per_state: 19","reorder(State, breweries_per_state):  WI<br />breweries_per_state: 20","reorder(State, breweries_per_state):  IN<br />breweries_per_state: 22","reorder(State, breweries_per_state):  MA<br />breweries_per_state: 23","reorder(State, breweries_per_state):  WA<br />breweries_per_state: 23","reorder(State, breweries_per_state):  PA<br />breweries_per_state: 25","reorder(State, breweries_per_state):  TX<br />breweries_per_state: 28","reorder(State, breweries_per_state):  OR<br />breweries_per_state: 29","reorder(State, breweries_per_state):  MI<br />breweries_per_state: 32","reorder(State, breweries_per_state):  CA<br />breweries_per_state: 39","reorder(State, breweries_per_state):  CO<br />breweries_per_state: 47"],"type":"bar","marker":{"autocolorscale":false,"color":"rgba(102,252,241,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":46.2864259028643,"r":7.97011207970112,"b":50.2117061021171,"l":40.6475716064757},"plot_bgcolor":"rgba(11,12,16,1)","paper_bgcolor":"rgba(11,12,16,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":15.9402241594022},"title":{"text":"Total Breweries per State","font":{"color":"rgba(255,255,255,1)","family":"","size":19.1282689912827},"x":0.5,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.4,51.6],"tickmode":"array","ticktext":[" DC"," ND"," SD"," WV"," AR"," DE"," MS"," NV"," AL"," KS"," NH"," NJ"," TN"," HI"," KY"," NM"," SC"," UT"," WY"," IA"," ID"," LA"," NE"," RI"," OK"," AK"," GA"," MD"," CT"," ME"," MO"," MT"," VT"," AZ"," MN"," FL"," OH"," NY"," VA"," IL"," NC"," WI"," IN"," MA"," WA"," PA"," TX"," OR"," MI"," CA"," CO"],"tickvals":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51],"categoryorder":"array","categoryarray":[" DC"," ND"," SD"," WV"," AR"," DE"," MS"," NV"," AL"," KS"," NH"," NJ"," TN"," HI"," KY"," NM"," SC"," UT"," WY"," IA"," ID"," LA"," NE"," RI"," OK"," AK"," GA"," MD"," CT"," ME"," MO"," MT"," VT"," AZ"," MN"," FL"," OH"," NY"," VA"," IL"," NC"," WI"," IN"," MA"," WA"," PA"," TX"," OR"," MI"," CA"," CO"],"nticks":null,"ticks":"outside","tickcolor":"rgba(0,0,0,1)","ticklen":3.98505603985056,"tickwidth":0.724555643609193,"showticklabels":true,"tickfont":{"color":"rgba(207,198,199,1)","family":"","size":12.7521793275218},"tickangle":-90,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":{"text":"State","font":{"color":"rgba(255,255,255,1)","family":"","size":15.9402241594022}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-2.35,49.35],"tickmode":"array","ticktext":["0","10","20","30","40"],"tickvals":[0,10,20,30,40],"categoryorder":"array","categoryarray":["0","10","20","30","40"],"nticks":null,"ticks":"outside","tickcolor":"rgba(0,0,0,1)","ticklen":3.98505603985056,"tickwidth":0.724555643609193,"showticklabels":true,"tickfont":{"color":"rgba(207,198,199,1)","family":"","size":12.7521793275218},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(69,58,59,1)","gridwidth":0.33208800332088,"zeroline":false,"anchor":"x","title":{"text":"Total Breweries","font":{"color":"rgba(255,255,255,1)","family":"","size":15.9402241594022}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(0,0,0,1)","width":0.724555643609193,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":2.06156048675734,"font":{"color":"rgba(0,0,0,1)","family":"","size":12.7521793275218}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"41d467b07fa9":{"x":{},"y":{},"type":"bar"}},"cur_data":"41d467b07fa9","visdat":{"41d467b07fa9":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>  # Part 2: Joining beer and brewery datasets. Can we combine the data? What’s it look like? In order to join the two dataframes, we called the “merge” function and joined the two dataframes on common keys - brewery_id and brew_id. We made sure to rename the columns for easier reuse and then displayed the results using an rbind function to combine the heads and tails of the resultant dataframe.</p>
+<pre class="r"><code># Question 2: Merge Beer data with Breweries data. Print head(6) and tail(6)
+# Note: left join breweries on beers because 1-many relationship
+main &lt;- merge(beers, breweries, by.x=&quot;Brewery_id&quot;, by.y=&quot;Brew_ID&quot;)
+
+# clean column names for good housekeeping
+main_cols &lt;- c(&quot;brewery_id&quot;, &quot;beer_name&quot;, &quot;beer_id&quot;, &quot;abv&quot;, &quot;ibu&quot;, &quot;beer_style&quot;, &quot;serving_ounces&quot;, &quot;brewery_name&quot;, &quot;city&quot;, &quot;state&quot;)
+names(main) &lt;- main_cols
+
+# print head and tail of resultant data set
+print(rbind(head(main, 6), tail(main, 6)))</code></pre>
+<pre><code>##      brewery_id                 beer_name beer_id   abv ibu
+## 1             1              Get Together    2692 0.045  50
+## 2             1             Maggie&#39;s Leap    2691 0.049  26
+## 3             1                Wall&#39;s End    2690 0.048  19
+## 4             1                   Pumpion    2689 0.060  38
+## 5             1                Stronghold    2688 0.060  25
+## 6             1               Parapet ESB    2687 0.056  47
+## 2405        556             Pilsner Ukiah      98 0.055  NA
+## 2406        557  Heinnieweisse Weissebier      52 0.049  NA
+## 2407        557           Snapperhead IPA      51 0.068  NA
+## 2408        557         Moo Thunder Stout      50 0.049  NA
+## 2409        557         Porkslap Pale Ale      49 0.043  NA
+## 2410        558 Urban Wilderness Pale Ale      30 0.049  NA
+##                               beer_style serving_ounces
+## 1                           American IPA             16
+## 2                     Milk / Sweet Stout             16
+## 3                      English Brown Ale             16
+## 4                            Pumpkin Ale             16
+## 5                        American Porter             16
+## 6    Extra Special / Strong Bitter (ESB)             16
+## 2405                     German Pilsener             12
+## 2406                          Hefeweizen             12
+## 2407                        American IPA             12
+## 2408                  Milk / Sweet Stout             12
+## 2409             American Pale Ale (APA)             12
+## 2410                    English Pale Ale             12
+##                       brewery_name          city state
+## 1               NorthGate Brewing    Minneapolis    MN
+## 2               NorthGate Brewing    Minneapolis    MN
+## 3               NorthGate Brewing    Minneapolis    MN
+## 4               NorthGate Brewing    Minneapolis    MN
+## 5               NorthGate Brewing    Minneapolis    MN
+## 6               NorthGate Brewing    Minneapolis    MN
+## 2405         Ukiah Brewing Company         Ukiah    CA
+## 2406       Butternuts Beer and Ale Garrattsville    NY
+## 2407       Butternuts Beer and Ale Garrattsville    NY
+## 2408       Butternuts Beer and Ale Garrattsville    NY
+## 2409       Butternuts Beer and Ale Garrattsville    NY
+## 2410 Sleeping Lady Brewing Company     Anchorage    AK</code></pre>
+
+</div>
+<div id="part-3-addressing-na-values." class="section level1">
+<h1>Part 3: Addressing “NA” values.</h1>
+<p>How can we address the “NA” values? In order to perform more detailed analysis, it’s important to address the null values. In order to get a better idea of missing data, we filtered the dataframe to only null values using “is.na” and then took the count of each column using “colSums”. You can see in the print statement below that the most influencial null value is ibu. Almost half of the ibu values are missing! In order to “massage” this into workable data, we made an assumption that the median values for each style should be fairly close to the actual values. This is due to the fact that each beer style has ranges on ibu, therefore, we know a good range of potential values which the actual could lie in.</p>
+<pre class="r"><code># Part 3: Address NA values in each column
+# find the NA count per column to decide next steps...you will see some missing abv and A LOT of missing ibu
+print(colSums(is.na(main)))</code></pre>
+<pre><code>##     brewery_id      beer_name        beer_id            abv            ibu 
+##              0              0              0             62           1005 
+##     beer_style serving_ounces   brewery_name           city          state 
+##              0              0              0              0              0</code></pre>
+<pre class="r"><code># Preserve a version of merged dataset by removing all NAs
+main_clean&lt;-na.omit(main)
+
+# based on evidence, will use median abv and ibu per beer style to fill na
+main &lt;- main %&gt;% group_by(beer_style) %&gt;% mutate(ibu_corr = ifelse(is.na(ibu), median(ibu, na.rm = TRUE), ibu), abv_corr = ifelse(is.na(abv), median(abv, na.rm = TRUE), abv))
+
+# let&#39;s see how we did...you will see all abv &quot;corrected&quot; and ibu had over 950 values &quot;corrected&quot;
+print(colSums(is.na(main)))</code></pre>
+<pre><code>##     brewery_id      beer_name        beer_id            abv            ibu 
+##              0              0              0             62           1005 
+##     beer_style serving_ounces   brewery_name           city          state 
+##              0              0              0              0              0 
+##       ibu_corr       abv_corr 
+##             52              0</code></pre>
+<pre class="r"><code># Export the no-NAs file to a new csv file
+#write.csv(main_clean,&quot;./Brewery_and_Beer_Clean.csv&quot;, row.names = FALSE)</code></pre>
+
+</div>
+<div id="part-4-median-abv-and-ibu-for-entire-dataset." class="section level1">
+<h1>Part 4: Median ABV and IBU for entire dataset.</h1>
+<p>After checking for null values, we then compute the median ABV and IBU for the dataset to give a representation of the central values to expect among all beers. We accomplish this using a grouping statement and then dplyr’s summarise statement in order to perform a median aggregation on each column.</p>
+<pre class="r"><code># Part 4: Compute Median ABV and IBU and do bar plot
+medians &lt;- main_clean %&gt;% group_by(state) %&gt;% summarise(median_abv = median(abv), median_ibu = median(ibu))
+
+#Bar_Chart_Plotter
+
+# ibu bar plot
+fig2 &lt;- medians %&gt;% ggplot() + geom_bar(aes(x=reorder(state, -median_ibu), y=median_ibu), stat=&quot;identity&quot;, fill=bar_color) + ggtitle(&quot;Median IBU per State&quot;) +ylab(&quot;Median IBU&quot;) + xlab(&quot;State&quot;) 
+
+# abv bar plot
+fig3 &lt;- medians %&gt;% ggplot() + geom_bar(aes(x=reorder(state, -median_abv), y=median_abv*100), stat=&quot;identity&quot;, fill=bar_color) + ggtitle(&quot;Median ABV per State&quot;) +ylab(&quot;Median ABV&quot;) + xlab(&quot;State&quot;) + expand_limits(y=c(0, max(medians$median_abv+0.5)))
+
+ggplotly(fig2)</code></pre>
+<div id="htmlwidget-d628d6e65f70a12cb5a1" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d628d6e65f70a12cb5a1">{"x":{"data":[{"orientation":"v","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.900000000000002,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006],"base":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"x":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50],"y":[61,57.5,55,55,52,51,48.5,47.5,47,46,45,44.5,43,42,42,41,40,40,40,40,39,39,38,37,35,35,35,35,34.5,34,33.5,33,33,32,31.5,31.5,30,30,30,30,29,29,26,24,24,22.5,21,20.5,20,19],"text":["reorder(state, -median_ibu):  ME<br />median_ibu: 61.0","reorder(state, -median_ibu):  WV<br />median_ibu: 57.5","reorder(state, -median_ibu):  FL<br />median_ibu: 55.0","reorder(state, -median_ibu):  GA<br />median_ibu: 55.0","reorder(state, -median_ibu):  DE<br />median_ibu: 52.0","reorder(state, -median_ibu):  NM<br />median_ibu: 51.0","reorder(state, -median_ibu):  NH<br />median_ibu: 48.5","reorder(state, -median_ibu):  DC<br />median_ibu: 47.5","reorder(state, -median_ibu):  NY<br />median_ibu: 47.0","reorder(state, -median_ibu):  AK<br />median_ibu: 46.0","reorder(state, -median_ibu):  MS<br />median_ibu: 45.0","reorder(state, -median_ibu):  MN<br />median_ibu: 44.5","reorder(state, -median_ibu):  AL<br />median_ibu: 43.0","reorder(state, -median_ibu):  CA<br />median_ibu: 42.0","reorder(state, -median_ibu):  VA<br />median_ibu: 42.0","reorder(state, -median_ibu):  NV<br />median_ibu: 41.0","reorder(state, -median_ibu):  CO<br />median_ibu: 40.0","reorder(state, -median_ibu):  MT<br />median_ibu: 40.0","reorder(state, -median_ibu):  OH<br />median_ibu: 40.0","reorder(state, -median_ibu):  OR<br />median_ibu: 40.0","reorder(state, -median_ibu):  AR<br />median_ibu: 39.0","reorder(state, -median_ibu):  ID<br />median_ibu: 39.0","reorder(state, -median_ibu):  WA<br />median_ibu: 38.0","reorder(state, -median_ibu):  TN<br />median_ibu: 37.0","reorder(state, -median_ibu):  MA<br />median_ibu: 35.0","reorder(state, -median_ibu):  MI<br />median_ibu: 35.0","reorder(state, -median_ibu):  NE<br />median_ibu: 35.0","reorder(state, -median_ibu):  OK<br />median_ibu: 35.0","reorder(state, -median_ibu):  NJ<br />median_ibu: 34.5","reorder(state, -median_ibu):  UT<br />median_ibu: 34.0","reorder(state, -median_ibu):  NC<br />median_ibu: 33.5","reorder(state, -median_ibu):  IN<br />median_ibu: 33.0","reorder(state, -median_ibu):  TX<br />median_ibu: 33.0","reorder(state, -median_ibu):  ND<br />median_ibu: 32.0","reorder(state, -median_ibu):  KY<br />median_ibu: 31.5","reorder(state, -median_ibu):  LA<br />median_ibu: 31.5","reorder(state, -median_ibu):  IL<br />median_ibu: 30.0","reorder(state, -median_ibu):  PA<br />median_ibu: 30.0","reorder(state, -median_ibu):  SC<br />median_ibu: 30.0","reorder(state, -median_ibu):  VT<br />median_ibu: 30.0","reorder(state, -median_ibu):  CT<br />median_ibu: 29.0","reorder(state, -median_ibu):  MD<br />median_ibu: 29.0","reorder(state, -median_ibu):  IA<br />median_ibu: 26.0","reorder(state, -median_ibu):  MO<br />median_ibu: 24.0","reorder(state, -median_ibu):  RI<br />median_ibu: 24.0","reorder(state, -median_ibu):  HI<br />median_ibu: 22.5","reorder(state, -median_ibu):  WY<br />median_ibu: 21.0","reorder(state, -median_ibu):  AZ<br />median_ibu: 20.5","reorder(state, -median_ibu):  KS<br />median_ibu: 20.0","reorder(state, -median_ibu):  WI<br />median_ibu: 19.0"],"type":"bar","marker":{"autocolorscale":false,"color":"rgba(102,252,241,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":46.2864259028643,"r":7.97011207970112,"b":50.2117061021171,"l":40.6475716064757},"plot_bgcolor":"rgba(11,12,16,1)","paper_bgcolor":"rgba(11,12,16,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":15.9402241594022},"title":{"text":"Median IBU per State","font":{"color":"rgba(255,255,255,1)","family":"","size":19.1282689912827},"x":0.5,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.4,50.6],"tickmode":"array","ticktext":[" ME"," WV"," FL"," GA"," DE"," NM"," NH"," DC"," NY"," AK"," MS"," MN"," AL"," CA"," VA"," NV"," CO"," MT"," OH"," OR"," AR"," ID"," WA"," TN"," MA"," MI"," NE"," OK"," NJ"," UT"," NC"," IN"," TX"," ND"," KY"," LA"," IL"," PA"," SC"," VT"," CT"," MD"," IA"," MO"," RI"," HI"," WY"," AZ"," KS"," WI"],"tickvals":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50],"categoryorder":"array","categoryarray":[" ME"," WV"," FL"," GA"," DE"," NM"," NH"," DC"," NY"," AK"," MS"," MN"," AL"," CA"," VA"," NV"," CO"," MT"," OH"," OR"," AR"," ID"," WA"," TN"," MA"," MI"," NE"," OK"," NJ"," UT"," NC"," IN"," TX"," ND"," KY"," LA"," IL"," PA"," SC"," VT"," CT"," MD"," IA"," MO"," RI"," HI"," WY"," AZ"," KS"," WI"],"nticks":null,"ticks":"outside","tickcolor":"rgba(0,0,0,1)","ticklen":3.98505603985056,"tickwidth":0.724555643609193,"showticklabels":true,"tickfont":{"color":"rgba(207,198,199,1)","family":"","size":12.7521793275218},"tickangle":-90,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":{"text":"State","font":{"color":"rgba(255,255,255,1)","family":"","size":15.9402241594022}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-3.05,64.05],"tickmode":"array","ticktext":["0","20","40","60"],"tickvals":[0,20,40,60],"categoryorder":"array","categoryarray":["0","20","40","60"],"nticks":null,"ticks":"outside","tickcolor":"rgba(0,0,0,1)","ticklen":3.98505603985056,"tickwidth":0.724555643609193,"showticklabels":true,"tickfont":{"color":"rgba(207,198,199,1)","family":"","size":12.7521793275218},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(69,58,59,1)","gridwidth":0.33208800332088,"zeroline":false,"anchor":"x","title":{"text":"Median IBU","font":{"color":"rgba(255,255,255,1)","family":"","size":15.9402241594022}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(0,0,0,1)","width":0.724555643609193,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":2.06156048675734,"font":{"color":"rgba(0,0,0,1)","family":"","size":12.7521793275218}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"41d434b17b37":{"x":{},"y":{},"type":"bar"}},"cur_data":"41d434b17b37","visdat":{"41d434b17b37":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>ggplotly(fig3)</code></pre>
+<div id="htmlwidget-1ff23818e658a6c12717" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1ff23818e658a6c12717">{"x":{"data":[{"orientation":"v","width":[0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.899999999999999,0.900000000000002,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006,0.900000000000006],"base":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"x":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50],"y":[6.7,6.5,6.3,6.2,6.2,6.2,6.1,6.1,6.1,6,5.95,5.9,5.8,5.8,5.8,5.75,5.75,5.75,5.7,5.7,5.7,5.7,5.7,5.7,5.65,5.6,5.6,5.6,5.6,5.6,5.55,5.5,5.5,5.5,5.5,5.5,5.4,5.25,5.2,5.1,5.1,5.1,5,5,5,5,4.65,4.6,4,4],"text":["reorder(state, -median_abv):  ME<br />median_abv * 100: 6.70","reorder(state, -median_abv):  CO<br />median_abv * 100: 6.50","reorder(state, -median_abv):  OK<br />median_abv * 100: 6.30","reorder(state, -median_abv):  FL<br />median_abv * 100: 6.20","reorder(state, -median_abv):  GA<br />median_abv * 100: 6.20","reorder(state, -median_abv):  WV<br />median_abv * 100: 6.20","reorder(state, -median_abv):  CT<br />median_abv * 100: 6.10","reorder(state, -median_abv):  NC<br />median_abv * 100: 6.10","reorder(state, -median_abv):  NM<br />median_abv * 100: 6.10","reorder(state, -median_abv):  AL<br />median_abv * 100: 6.00","reorder(state, -median_abv):  NY<br />median_abv * 100: 5.95","reorder(state, -median_abv):  DC<br />median_abv * 100: 5.90","reorder(state, -median_abv):  CA<br />median_abv * 100: 5.80","reorder(state, -median_abv):  ID<br />median_abv * 100: 5.80","reorder(state, -median_abv):  MS<br />median_abv * 100: 5.80","reorder(state, -median_abv):  OH<br />median_abv * 100: 5.75","reorder(state, -median_abv):  AZ<br />median_abv * 100: 5.75","reorder(state, -median_abv):  KY<br />median_abv * 100: 5.75","reorder(state, -median_abv):  AK<br />median_abv * 100: 5.70","reorder(state, -median_abv):  IL<br />median_abv * 100: 5.70","reorder(state, -median_abv):  IN<br />median_abv * 100: 5.70","reorder(state, -median_abv):  MT<br />median_abv * 100: 5.70","reorder(state, -median_abv):  PA<br />median_abv * 100: 5.70","reorder(state, -median_abv):  VA<br />median_abv * 100: 5.70","reorder(state, -median_abv):  MD<br />median_abv * 100: 5.65","reorder(state, -median_abv):  IA<br />median_abv * 100: 5.60","reorder(state, -median_abv):  MI<br />median_abv * 100: 5.60","reorder(state, -median_abv):  NE<br />median_abv * 100: 5.60","reorder(state, -median_abv):  OR<br />median_abv * 100: 5.60","reorder(state, -median_abv):  WA<br />median_abv * 100: 5.60","reorder(state, -median_abv):  MN<br />median_abv * 100: 5.55","reorder(state, -median_abv):  DE<br />median_abv * 100: 5.50","reorder(state, -median_abv):  NV<br />median_abv * 100: 5.50","reorder(state, -median_abv):  TN<br />median_abv * 100: 5.50","reorder(state, -median_abv):  TX<br />median_abv * 100: 5.50","reorder(state, -median_abv):  VT<br />median_abv * 100: 5.50","reorder(state, -median_abv):  MA<br />median_abv * 100: 5.40","reorder(state, -median_abv):  RI<br />median_abv * 100: 5.25","reorder(state, -median_abv):  HI<br />median_abv * 100: 5.20","reorder(state, -median_abv):  LA<br />median_abv * 100: 5.10","reorder(state, -median_abv):  WY<br />median_abv * 100: 5.10","reorder(state, -median_abv):  WI<br />median_abv * 100: 5.10","reorder(state, -median_abv):  KS<br />median_abv * 100: 5.00","reorder(state, -median_abv):  MO<br />median_abv * 100: 5.00","reorder(state, -median_abv):  ND<br />median_abv * 100: 5.00","reorder(state, -median_abv):  SC<br />median_abv * 100: 5.00","reorder(state, -median_abv):  NH<br />median_abv * 100: 4.65","reorder(state, -median_abv):  NJ<br />median_abv * 100: 4.60","reorder(state, -median_abv):  AR<br />median_abv * 100: 4.00","reorder(state, -median_abv):  UT<br />median_abv * 100: 4.00"],"type":"bar","marker":{"autocolorscale":false,"color":"rgba(102,252,241,1)","line":{"width":1.88976377952756,"color":"transparent"}},"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"visible":false,"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":46.2864259028643,"r":7.97011207970112,"b":50.2117061021171,"l":34.2714819427148},"plot_bgcolor":"rgba(11,12,16,1)","paper_bgcolor":"rgba(11,12,16,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":15.9402241594022},"title":{"text":"Median ABV per State","font":{"color":"rgba(255,255,255,1)","family":"","size":19.1282689912827},"x":0.5,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.4,50.6],"tickmode":"array","ticktext":[" ME"," CO"," OK"," FL"," GA"," WV"," CT"," NC"," NM"," AL"," NY"," DC"," CA"," ID"," MS"," OH"," AZ"," KY"," AK"," IL"," IN"," MT"," PA"," VA"," MD"," IA"," MI"," NE"," OR"," WA"," MN"," DE"," NV"," TN"," TX"," VT"," MA"," RI"," HI"," LA"," WY"," WI"," KS"," MO"," ND"," SC"," NH"," NJ"," AR"," UT"],"tickvals":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50],"categoryorder":"array","categoryarray":[" ME"," CO"," OK"," FL"," GA"," WV"," CT"," NC"," NM"," AL"," NY"," DC"," CA"," ID"," MS"," OH"," AZ"," KY"," AK"," IL"," IN"," MT"," PA"," VA"," MD"," IA"," MI"," NE"," OR"," WA"," MN"," DE"," NV"," TN"," TX"," VT"," MA"," RI"," HI"," LA"," WY"," WI"," KS"," MO"," ND"," SC"," NH"," NJ"," AR"," UT"],"nticks":null,"ticks":"outside","tickcolor":"rgba(0,0,0,1)","ticklen":3.98505603985056,"tickwidth":0.724555643609193,"showticklabels":true,"tickfont":{"color":"rgba(207,198,199,1)","family":"","size":12.7521793275218},"tickangle":-90,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":{"text":"State","font":{"color":"rgba(255,255,255,1)","family":"","size":15.9402241594022}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.335,7.035],"tickmode":"array","ticktext":["0","2","4","6"],"tickvals":[0,2,4,6],"categoryorder":"array","categoryarray":["0","2","4","6"],"nticks":null,"ticks":"outside","tickcolor":"rgba(0,0,0,1)","ticklen":3.98505603985056,"tickwidth":0.724555643609193,"showticklabels":true,"tickfont":{"color":"rgba(207,198,199,1)","family":"","size":12.7521793275218},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(69,58,59,1)","gridwidth":0.33208800332088,"zeroline":false,"anchor":"x","title":{"text":"Median ABV","font":{"color":"rgba(255,255,255,1)","family":"","size":15.9402241594022}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":"transparent","line":{"color":"rgba(0,0,0,1)","width":0.724555643609193,"linetype":"solid"},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":2.06156048675734,"font":{"color":"rgba(0,0,0,1)","family":"","size":12.7521793275218}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"41d42acc2826":{"x":{},"y":{},"type":"bar"},"41d4a236dda":{"y":{}}},"cur_data":"41d42acc2826","visdat":{"41d42acc2826":["function (y) ","x"],"41d4a236dda":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
