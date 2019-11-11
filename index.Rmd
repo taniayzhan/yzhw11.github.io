@@ -16,7 +16,7 @@ knitr::include_graphics("me.png")
 
 I am a:
 
-* Unconventional professional in a conventional energy (oil and gas) industry
+* "Unconventional" professional in a conventional energy (oil and gas) industry
 
 * Aspiring data scientist
 
@@ -25,3 +25,9 @@ I am a:
 * PhD with no permanent brain damage 
 
 * enthusiastic reader, traveler and explorer to new things
+
+
+
+
+“The other tabs represent work / analyses that I have completed.  Please check them out!”
+
