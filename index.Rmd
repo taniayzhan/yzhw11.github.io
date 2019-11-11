@@ -1,6 +1,6 @@
 ---
-title: "Simple Website"
-author: "YZ"
+title: "Personal Website"
+author: "Yang Zhang"
 date: "11/10/2019"
 output: html_document
 ---
@@ -10,18 +10,18 @@ output: html_document
 
 
 ```{r, echo = F, fig.align = 'center'}
-knitr::include_graphics("images/me.png")
+knitr::include_graphics("me.png")
 ```
 
 
 I am a:
 
+* Unconventional professional in a conventional energy (oil and gas) industry
+
 * Aspiring data scientist
 
-* Open source contributor (author of 1.5 [R packages](https://rdrr.io/github/josephsdavid/tswgewrapped/))
+* Mom of a girl and a boy
 
-* [Chess player](https://lichess.org/@/SchevyHeavy)
+* PhD with no permanent brain damage 
 
-* Vim and Linux enthusiast
-
-* [TA to a graduate level data science course](https://github.com/josephsdavid/teachR)
+* enthusiastic reader, traveler and explorer to new things
