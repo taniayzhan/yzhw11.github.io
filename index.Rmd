@@ -5,6 +5,23 @@ date: "11/10/2019"
 output: html_document
 ---
 
-# Yang Zhang's Simple Website
-## The content is for DS6307 Homework
-### Hope you find it interesting!
+
+# About Me
+
+
+```{r, echo = F, fig.align = 'center'}
+knitr::include_graphics("images/me.png")
+```
+
+
+I am a:
+
+* Aspiring data scientist
+
+* Open source contributor (author of 1.5 [R packages](https://rdrr.io/github/josephsdavid/tswgewrapped/))
+
+* [Chess player](https://lichess.org/@/SchevyHeavy)
+
+* Vim and Linux enthusiast
+
+* [TA to a graduate level data science course](https://github.com/josephsdavid/teachR)
